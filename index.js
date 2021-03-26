@@ -1,17 +1,12 @@
-// TODO: Include packages needed for this application
-
 const fs = require("fs");
 const inquirer = require("inquirer");
-const markdown = require("./utils/generateMarkdown.js")
-
-// TODO: Create an array of questions for user input
 
 const questions = [
   "What is the title of your project?",
   "Give your project a description:",
   "Give detailed installation instructions:",
   "Give detailed usage instructions:",
-  "List any contributors (preferably by Github username):",
+  "List any contributors (preferably by Github username, seperated only by spaces no commas):",
   "Give instructions to test application:",
   "What is your Github Username?",
   "What is your Email Address?",
@@ -27,17 +22,17 @@ function inquire() {
         name: "title",
       },
       {
-        type: "input",
+        type: "editor",
         message: questions[1],
         name: "description",
       },
       {
-        type: "input",
+        type: "editor",
         message: questions[2],
         name: "installation",
       },
       {
-        type: "input",
+        type: "editor",
         message: questions[3],
         name: "usage",
       },
@@ -47,7 +42,7 @@ function inquire() {
         name: "contributors",
       },
       {
-        type: "input",
+        type: "editor",
         message: questions[5],
         name: "testing",
       },
@@ -67,25 +62,43 @@ function inquire() {
         choices: [
           "GNU GPLv3",
           "MIT License",
-          "No License"
+          "No License",
         ],
         name: "license",
       }
     ])
     .then(function(data){
-      fs.writeFile(`${data.title}.md`, 
-      markdown.generateMarkdown, 
+        contributorArr = data.contributors.trim().split(" ");
+        for (i = 0; i < contributorArr.length; i++) {
+          contributorArr[i] = `* ${contributorArr[i]}\n`
+        };
+
+      let licenseBadge = 
+      data.license === "GNU GPLv3" ? `[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)`
+      : data.license === "MIT License" ? `[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)`
+      : `[![License: CC0-1.0](https://licensebuttons.net/l/zero/1.0/80x15.png)]`;
+
+      fs.writeFile(`${data.title}.md`,
+`# ${data.title}
+## Description ${licenseBadge}
+${data.description}
+## Installation
+${data.installation}
+## Usage
+${data.usage}
+## Contribution
+${(contributorArr.join()).replace(/,/g, "")}
+## Testing
+${data.testing}
+## Questions
+${data.github}
+${data.email}`, 
       (err) => err ? console.log(err) : console.log("README created successfully!"))
     });
 };
 
-// TODO: Create a function to write README file
-
-
-// TODO: Create a function to initialize app
 function init() {
   inquire();
 };
 
-// Function call to initialize app
 init();
