@@ -14,6 +14,8 @@
 ## Description
 This project is a free, open-source script to be ran in the command line. 
 
+When ran, it generates a high quality README file to help you spend less time on markdown and more on what matters (assuming you don't care much for markdown).
+
 It works best when ran in gitbash, and requires some knowledge of command line prompts as well as markdown.
 
 If you do not know much about writing your own markdown, I would recommend practicing writing your own before using any generators, including mine.
