@@ -43,9 +43,6 @@ If you don't want to or cant watch the video...
 4. Wait for Inquirer to install (git bash will throw you into a new line when done)
        
 5. You are now ready to run the generator with the command `node index.js`!
-## Contribution
-* Fiskoal
-
 ## Questions
 If you have any further questions or feedback, please contact me on [github](https://github.com/Fiskoal) or by [email](knicleyjakob@gmail.com)
 ## License: MIT License
